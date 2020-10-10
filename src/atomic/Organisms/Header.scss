@@ -1,0 +1,15 @@
+.App-header {
+  background-color: #ccc;
+  min-height: 5vh;
+  display: flex;
+  justify-content: flex-end;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-bottom: 3vh;
+  .Menu {
+    button {
+      min-height: 5vh;
+      font-size: 4vh;
+    }
+  }
+}

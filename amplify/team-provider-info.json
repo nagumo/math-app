@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-mathapp-dev-230234-authRole",
+      "UnauthRoleArn": "arn:aws:iam::511828167346:role/amplify-mathapp-dev-230234-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::511828167346:role/amplify-mathapp-dev-230234-authRole",
+      "Region": "ap-northeast-1",
+      "DeploymentBucketName": "amplify-mathapp-dev-230234-deployment",
+      "UnauthRoleName": "amplify-mathapp-dev-230234-unauthRole",
+      "StackName": "amplify-mathapp-dev-230234",
+      "StackId": "arn:aws:cloudformation:ap-northeast-1:511828167346:stack/amplify-mathapp-dev-230234/448764f0-fcdc-11ea-abcc-0e81cb4deac6",
+      "AmplifyAppId": "d38xxtzckq56sr"
+    }
+  }
+}

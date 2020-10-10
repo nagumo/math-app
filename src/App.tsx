@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { makeStyles } from '@material-ui/styles'
+import Header from './atomic/Organisms/Header'
+import Multi from './atomic/Pages/Multi'
+import Sub from './atomic/Pages/Sub'
+import './App.scss'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-function App() {
+const useStyles = makeStyles({
+  appHheader: {
+    backgroundColor: '#282c34',
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 'calc(10px + 2vmin)',
+    color: 'white',
+  },
+  appLink: {
+    color: '#61dafb',
+  },
+})
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <div className="App">
+        <Header />
+        <Route exact path="/multi" component={Multi} />
+        <Route exact path="/sub" component={Sub} />
+      </div>
+    </Router>
+  )
 }
 
-export default App;
+export default App
