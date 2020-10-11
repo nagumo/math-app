@@ -1,5 +1,4 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/styles'
 import Header from './atomic/Organisms/Header'
 import Multi from './atomic/Pages/Multi'
 import Sub from './atomic/Pages/Sub'
