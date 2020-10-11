@@ -1,10 +1,24 @@
+import assert from 'assert'
 import React from 'react'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
 import { Button, Menu, MenuItem } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import './Header.scss'
 
-const App: React.FC = () => {
+type Props = {
+  menuItemList?: {
+    text: string
+    path: string
+  }[]
+}
+
+const menuItemList = [
+  { text: 'ホーム', path: '/' },
+  { text: 'ひきざん', path: '/sub' },
+  { text: 'かけ算', path: '/multi' },
+]
+
+const App = (props: Props) => {
   let [anchorEl, open] = React.useState<Element | null>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
@@ -14,6 +28,20 @@ const App: React.FC = () => {
 
   const handleClose = () => {
     open(null)
+  }
+
+  const menuItems = () => {
+    assert(props.menuItemList)
+    const items = props.menuItemList?.map((item) => {
+      return (
+        <MenuItem onClick={handleClose}>
+          <Link className="MenuItem" to={item.path}>
+            {item.text}
+          </Link>
+        </MenuItem>
+      )
+    })
+    return items
   }
 
   return (
@@ -34,15 +62,7 @@ const App: React.FC = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
-          <Link to="/">ホーム</Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to="/sub">引き算</Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to="/multi">掛け算九九</Link>
-        </MenuItem>
+        {menuItems()}
       </Menu>
     </header>
   )
