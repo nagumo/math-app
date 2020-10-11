@@ -26,7 +26,7 @@ const App = (props: Props) => {
 
   const menuItems = () => {
     assert(props.menuItemList)
-    const items = props.menuItemList?.map((item) => {
+    return props.menuItemList.map((item) => {
       return (
         <MenuItem onClick={handleClose}>
           <Link className="MenuItem" to={item.path}>
@@ -35,7 +35,6 @@ const App = (props: Props) => {
         </MenuItem>
       )
     })
-    return items
   }
 
   return (
