@@ -12,12 +12,6 @@ type Props = {
   }[]
 }
 
-const menuItemList = [
-  { text: 'ホーム', path: '/' },
-  { text: 'ひきざん', path: '/sub' },
-  { text: 'かけ算', path: '/multi' },
-]
-
 const App = (props: Props) => {
   let [anchorEl, open] = React.useState<Element | null>(null)
 
