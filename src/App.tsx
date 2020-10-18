@@ -1,26 +1,24 @@
 import React from 'react'
-import Header from './atomic/Organisms/Header'
-import Multi from './atomic/Pages/Multi'
-import Sub from './atomic/Pages/Sub'
+import { BrowserRouter } from 'react-router-dom'
+import AppRoutes from './route/Routes'
+import { Header } from './atomic/Organisms/Header'
 import './App.scss'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-const menuItemList = [
-  { text: 'ホーム', path: '/' },
-  { text: 'ひきざん', path: '/sub' },
-  { text: 'かけ算', path: '/multi' },
+const navMenuItems = [
+  { key: '/', text: 'ホーム', path: '/' },
+  { key: '/sum', text: 'たしざん', path: '/sum' },
+  { key: '/sub', text: 'ひきざん', path: '/sub' },
+  { key: '/multi', text: 'かけ算', path: '/multi' },
 ]
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <Router>
-      <div className="App">
-        <Header menuItemList={menuItemList} />
-        <Route exact path="/multi" component={Multi} />
-        <Route exact path="/sub" component={Sub} />
-      </div>
-    </Router>
+    <div className="App">
+      <BrowserRouter>
+        <Header navMenuItems={navMenuItems} />
+        <AppRoutes />
+      </BrowserRouter>
+    </div>
   )
 }
-
 export default App
