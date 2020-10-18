@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Card from '../Organisms/Card'
 
-type Props = {
+type MultiProps = {
   x: number
   y: number
 }
@@ -10,31 +10,31 @@ const getRandomNumber = () => {
   return Math.floor(Math.sqrt(Math.random()) * 9) + 1
 }
 
-const getQuestion = (): Props => {
+const getQuestion = (): MultiProps => {
   return {
     x: getRandomNumber(),
     y: getRandomNumber(),
   }
 }
 
-const subQestion: Props = getQuestion()
+const multiQestion: MultiProps = getQuestion()
 
-const getFormula = (props: Props): string => {
+const getFormula = (props: MultiProps): string => {
   return `${props.x} x ${props.y}`
 }
 
-const getSub = (props: Props): number => {
+const getSub = (props: MultiProps): number => {
   return props.x * props.y
 }
 
-const Sub = (props: Props) => {
+const Multi = (props: MultiProps) => {
   let [isAnswer, setIsAnswer] = useState(false)
   if (isAnswer) {
-    props = subQestion
+    props = multiQestion
   } else {
     props = getQuestion()
-    subQestion.x = props.x
-    subQestion.y = props.y
+    multiQestion.x = props.x
+    multiQestion.y = props.y
   }
   return (
     <section className="main-contents">
@@ -50,4 +50,4 @@ const Sub = (props: Props) => {
   )
 }
 
-export default Sub
+export default Multi
