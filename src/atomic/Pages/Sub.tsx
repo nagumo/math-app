@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import Card from '../Organisms/Card'
 
-type Props = {
+type SubProps = {
   x: number
   y: number
 }
 
-const getQuestion = (): Props => {
+const getQuestion = (): SubProps => {
   const x = Math.floor(Math.sqrt(Math.random()) * 10) + 1
   return {
     x: x,
@@ -14,17 +14,17 @@ const getQuestion = (): Props => {
   }
 }
 
-const subQestion: Props = getQuestion()
+const subQestion: SubProps = getQuestion()
 
-const getFormula = (props: Props): string => {
+const getFormula = (props: SubProps): string => {
   return `${props.x} - ${props.y}`
 }
 
-const getSub = (props: Props): number => {
+const getSub = (props: SubProps): number => {
   return props.x - props.y
 }
 
-const Sub = (props: Props) => {
+const Sub: React.FC<SubProps> = (props) => {
   let [isAnswer, setIsAnswer] = useState(false)
   if (isAnswer) {
     props = subQestion
