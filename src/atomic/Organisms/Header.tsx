@@ -1,22 +1,22 @@
 import assert from 'assert'
 import React from 'react'
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button, Menu, MenuItem } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import './Header.scss'
 
-type Props = {
-  menuItemList?: {
+export type HeaderProps = {
+  navMenuItems?: {
+    key: string
     text: string
     path: string
   }[]
 }
 
-const App = (props: Props) => {
+export const Header = (props: HeaderProps) => {
   let [anchorEl, open] = React.useState<Element | null>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
-    console.log(event)
     open(event.currentTarget)
   }
 
@@ -25,8 +25,8 @@ const App = (props: Props) => {
   }
 
   const menuItems = () => {
-    assert(props.menuItemList)
-    return props.menuItemList.map((item) => {
+    assert(props.navMenuItems)
+    return props.navMenuItems.map((item) => {
       return (
         <MenuItem onClick={handleClose}>
           <Link className="MenuItem" to={item.path}>
@@ -60,5 +60,3 @@ const App = (props: Props) => {
     </header>
   )
 }
-
-export default App
