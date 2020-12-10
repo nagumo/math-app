@@ -1,23 +1,22 @@
 import React, { useState } from 'react'
 import Card from '../Organisms/Card'
+import { getRandomInteger } from '../../AppUtils/AppUtils'
 
 type SumProps = {
   x: number
   y: number
+  title: string
 }
 
-const getRandomNumber = () => {
-  return Math.floor(Math.sqrt(Math.random()) * 9) + 1
-}
-
-const getQuestion = (): SumProps => {
+const getQuestion = (title: string): SumProps => {
   return {
-    x: getRandomNumber(),
-    y: getRandomNumber(),
+    x: getRandomInteger(9, 1),
+    y: getRandomInteger(9, 1),
+    title: title,
   }
 }
 
-const sumQestion: SumProps = getQuestion()
+const sumQestion: Partial<SumProps> = {}
 
 const getFormula = (props: SumProps): string => {
   return `${props.x} + ${props.y}`
@@ -30,16 +29,16 @@ const getSub = (props: SumProps): number => {
 const Sum = (props: SumProps) => {
   let [isAnswer, setIsAnswer] = useState(false)
   if (isAnswer) {
-    props = sumQestion
+    props = getQuestion(props.title)
   } else {
-    props = getQuestion()
+    props = getQuestion(props.title)
     sumQestion.x = props.x
     sumQestion.y = props.y
   }
   return (
     <section className="main-contents">
       <Card
-        title="たしざん"
+        title={props.title}
         isAnswer={isAnswer}
         formula={getFormula(props)}
         answer={isAnswer ? getSub(props) : '???'}

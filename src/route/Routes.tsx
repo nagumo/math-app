@@ -1,31 +1,38 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 
-import App from '../App'
+import { Home } from '../atomic/Pages/Home'
 import Sum from '../atomic/Pages/Sum'
 import Sub from '../atomic/Pages/Sub'
-import Multi from '../atomic/Pages/Multi'
+import Mul from '../atomic/Pages/Multi'
+import Div from '../atomic/Pages/Div'
 
 interface PathToComponent {
   path: string
+  title: string
   component: React.FC<any>
 }
 
-const routeList: PathToComponent[] = [
-  { path: '/', component: App },
-  { path: '/sum', component: Sum },
-  { path: '/sub', component: Sub },
-  { path: '/multi', component: Multi },
+export const RouteList: PathToComponent[] = [
+  { path: '/', title: 'ホーム', component: Home },
+  { path: '/sum', title: 'たしざん', component: Sum },
+  { path: '/sub', title: 'ひきざん', component: Sub },
+  { path: '/mul', title: 'かけ算(九九)', component: Mul },
+  { path: '/div', title: '割り算(あまりなし)', component: Div },
 ]
 
-const RouteList = () => {
-  return routeList.map((path) => (
-    <Route exact path={path.path} component={path.component} />
+const RoutingList = () => {
+  return RouteList.map((path) => (
+    // <Route exact path={path.path} component={path.component} />
+    <Route
+      exact
+      key={path.path}
+      path={path.path}
+      render={() => <path.component title={path.title} />}
+    />
   ))
 }
 
-const AppRoutes: React.FC = () => {
-  return <div>{RouteList()}</div>
+export const AppRoutes: React.FC = () => {
+  return <div>{RoutingList()}</div>
 }
-
-export default AppRoutes

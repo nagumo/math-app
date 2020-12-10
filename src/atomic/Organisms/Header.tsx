@@ -7,13 +7,12 @@ import './Header.scss'
 
 export type HeaderProps = {
   navMenuItems?: {
-    key: string
-    text: string
+    title: string
     path: string
   }[]
 }
 
-export const Header = (props: HeaderProps) => {
+export const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
   let [anchorEl, open] = React.useState<Element | null>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
@@ -28,9 +27,9 @@ export const Header = (props: HeaderProps) => {
     assert(props.navMenuItems)
     return props.navMenuItems.map((item) => {
       return (
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} key={item.path}>
           <Link className="MenuItem" to={item.path}>
-            {item.text}
+            {item.title}
           </Link>
         </MenuItem>
       )

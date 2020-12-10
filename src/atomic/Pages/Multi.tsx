@@ -1,23 +1,22 @@
 import React, { useState } from 'react'
 import Card from '../Organisms/Card'
+import { getRandomInteger } from '../../AppUtils/AppUtils'
 
 type MultiProps = {
   x: number
   y: number
+  title: string
 }
 
-const getRandomNumber = () => {
-  return Math.floor(Math.sqrt(Math.random()) * 9) + 1
-}
-
-const getQuestion = (): MultiProps => {
+const getQuestion = (title: string): MultiProps => {
   return {
-    x: getRandomNumber(),
-    y: getRandomNumber(),
+    x: getRandomInteger(9, 1),
+    y: getRandomInteger(9, 1),
+    title: title,
   }
 }
 
-const multiQestion: MultiProps = getQuestion()
+const multiQestion: Partial<MultiProps> = {}
 
 const getFormula = (props: MultiProps): string => {
   return `${props.x} x ${props.y}`
@@ -30,16 +29,16 @@ const getSub = (props: MultiProps): number => {
 const Multi = (props: MultiProps) => {
   let [isAnswer, setIsAnswer] = useState(false)
   if (isAnswer) {
-    props = multiQestion
+    props = getQuestion(props.title)
   } else {
-    props = getQuestion()
+    props = getQuestion(props.title)
     multiQestion.x = props.x
     multiQestion.y = props.y
   }
   return (
     <section className="main-contents">
       <Card
-        title="かけ算九九"
+        title={props.title}
         isAnswer={isAnswer}
         formula={getFormula(props)}
         answer={isAnswer ? getSub(props) : '???'}

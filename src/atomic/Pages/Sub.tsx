@@ -1,20 +1,23 @@
 import React, { useState } from 'react'
 import Card from '../Organisms/Card'
+import { getRandomInteger } from '../../AppUtils/AppUtils'
 
 type SubProps = {
   x: number
   y: number
+  title: string
 }
 
-const getQuestion = (): SubProps => {
-  const x = Math.floor(Math.sqrt(Math.random()) * 10) + 1
+const getQuestion = (title: string): SubProps => {
+  const x = getRandomInteger(10, 1)
   return {
     x: x,
-    y: Math.floor(Math.random() * x) + 1,
+    y: getRandomInteger(x, 1),
+    title: title,
   }
 }
 
-const subQestion: SubProps = getQuestion()
+const subQestion: Partial<SubProps> = {}
 
 const getFormula = (props: SubProps): string => {
   return `${props.x} - ${props.y}`
@@ -27,16 +30,16 @@ const getSub = (props: SubProps): number => {
 const Sub: React.FC<SubProps> = (props) => {
   let [isAnswer, setIsAnswer] = useState(false)
   if (isAnswer) {
-    props = subQestion
+    props = getQuestion(props.title)
   } else {
-    props = getQuestion()
+    props = getQuestion(props.title)
     subQestion.x = props.x
     subQestion.y = props.y
   }
   return (
     <section className="main-contents">
       <Card
-        title="ひきざん"
+        title={props.title}
         isAnswer={isAnswer}
         formula={getFormula(props)}
         answer={isAnswer ? getSub(props) : '???'}

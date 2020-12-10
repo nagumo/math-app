@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, HeaderProps } from './Header'
+import { Header } from './Header'
 
 export default {
   title: 'Header Component',
@@ -7,8 +7,8 @@ export default {
 }
 
 const navMenuItems = [
-  { key: '/sub', text: 'ひきざん', path: '/sub' },
-  { key: '/multi', text: 'かけ算', path: '/multi' },
+  { title: 'ひきざん', path: '/sub' },
+  { title: 'かけ算', path: '/multi' },
 ]
 
 export const HeaderComponent = () => <Header navMenuItems={navMenuItems} />
