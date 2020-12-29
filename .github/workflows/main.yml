@@ -9,11 +9,12 @@ on:
     branches:
       - master
       - release/**
+      - feature/**
 
   pull_request:
-    branches:
-      - master
-      - release/**
+    types:
+      - opened
+      - synchronize
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -34,19 +35,22 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+      - name: echo branch
+        run: echo ${GITHUB_REF##*/}
 
-      - name: Install dependencies
-        run: npm i
-
-      - name: Run the Test
-        run: npm test -- --coverage
-
-      - name: Build
-        run: npm build
+      # - name: Set up Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+      #
+      # - name: Install dependencies
+      #   run: npm i
+      #
+      # - name: Run the Test
+      #   run: npm test -- --coverage
+      #
+      # - name: Build
+      #   run: npm build
 
       # # Runs a set of commands using the runners shell
       # - name: Run a multi-line script
