@@ -38,6 +38,12 @@ jobs:
       - name: echo branch
         run: echo ${GITHUB_REF##*/}
 
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+          echo ${{ github.event.pull_request.title }}
       # - name: Set up Node.js ${{ matrix.node-version }}
       #   uses: actions/setup-node@v1
       #   with:
