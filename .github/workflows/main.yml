@@ -4,9 +4,6 @@ name: CI
 
 # Controls when the action will run.
 
-env:
-  GITHUB_CONTEXT: ${{ toJson(github) }}
-
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -45,7 +42,6 @@ jobs:
           echo On push
           echo ${GITHUB_REF##*/}
           echo ${{ github.head_ref }}
-          echo ${{ github.event_name }}
 
       - name: Dump GitHub context
         if: github.event_name == 'pull_request'
@@ -53,7 +49,6 @@ jobs:
           echo On Pull Request
           echo ${{ github.event.pull_request.head.ref }}
           echo ${{ github.head_ref }}
-          echo ${{ github.event_name }}
 
       # - name: Set up Node.js ${{ matrix.node-version }}
       #   uses: actions/setup-node@v1
