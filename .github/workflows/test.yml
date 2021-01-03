@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Main
+name: test
 
 # Controls when the action will run.
 on:
@@ -34,6 +34,32 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
+      - name: Install Dependencies
+        run: npm i
+
+      - name: Build
+        run: npm build
+
+      - name: Test
+        run: npm test -- --coverage
 
       # - name: Dump GitHub context
       #   env:
