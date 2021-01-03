@@ -73,7 +73,7 @@ jobs:
       - name: Test
         run: npm test -- --coverage
 
-      # - name: Dump GitHub context
+      # - name: Dump GitHub context sample
       #   env:
       #     GITHUB_CONTEXT: ${{ toJson(github) }}
       #   run: echo "$GITHUB_CONTEXT"
