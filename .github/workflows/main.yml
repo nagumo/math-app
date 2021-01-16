@@ -30,7 +30,8 @@ jobs:
       - name:
         id: head_commit
         run: |
-          echo $(git log -1 --pretty=format:"%s")
+          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+          echo ${COMMIT_MESSAGE}
 
   # This workflow contains a single job called "build"
   build:
