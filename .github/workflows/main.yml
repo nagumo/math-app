@@ -35,7 +35,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: macos-10.15
-    needs: skipci
+    needs: head_commit
 
     strategy:
       matrix:
