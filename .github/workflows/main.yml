@@ -26,6 +26,7 @@ jobs:
     outputs:
       head_commit: ${{ steps.head_commit.outputs.head_commit }}
     steps:
+      - uses: actions/checkout@v2
       - name:
         id: head_commit
         run: |
