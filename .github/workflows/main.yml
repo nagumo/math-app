@@ -43,17 +43,19 @@ jobs:
       #     GITHUB_CONTEXT: ${{ toJson(github) }}
       #   run: echo "$GITHUB_CONTEXT"
 
-      - name: echo branch
+      - name: echo branch PUSH
         if: github.event_name == 'push'
         run: |
           echo On push
           echo ${GITHUB_REF##*/}
+          echo "$GITHUB_CONTEXT"
 
-      - name: Dump GitHub context
+      - name: echo branch PR
         if: github.event_name == 'pull_request'
         run: |
           echo On Pull Request
           echo ${{ github.head_ref }}
+          echo "$GITHUB_CONTEXT"
 
       # - name: Set up Node.js ${{ matrix.node-version }}
       #   uses: actions/setup-node@v1
