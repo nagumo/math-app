@@ -24,7 +24,7 @@ jobs:
   head_commit:
     runs-on: macos-10.15
     outputs:
-      head_commit: ${{ steps.head_commit.outputs.head_commit }}
+      head_commit_message: ${{ steps.head_commit.outputs.cm }}
     steps:
       - uses: actions/checkout@v2
       - name:
@@ -32,6 +32,7 @@ jobs:
         run: |
           COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
           echo ${COMMIT_MESSAGE}
+          echo "::set-output name=cm::${COMMIT_MESSAGE}"
 
   # This workflow contains a single job called "build"
   build:
@@ -46,6 +47,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     env:
       GITHUB_CONTEXT: ${{ toJson(github) }}
+      COMMIT_MESSAGE: ${{ needs.head_commit.outputs.head_commit_message }}
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -62,6 +64,7 @@ jobs:
           echo On push
           echo ${GITHUB_REF##*/}
           echo "$GITHUB_CONTEXT"
+          echo "$COMMIT_MESSAGE"
 
       - name: echo branch PR
         if: github.event_name == 'pull_request'
@@ -69,6 +72,7 @@ jobs:
           echo On Pull Request
           echo ${{ github.head_ref }}
           echo "$GITHUB_CONTEXT"
+          echo "$COMMIT_MESSAGE"
 
       # - name: Set up Node.js ${{ matrix.node-version }}
       #   uses: actions/setup-node@v1
