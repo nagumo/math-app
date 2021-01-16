@@ -29,7 +29,7 @@ jobs:
       - name:
         id: head_commit
         run: |
-          echo ${git log -1 --pretty=format:"%s"}
+          echo $(git log -1 --pretty=format:"%s")
 
   # This workflow contains a single job called "build"
   build:
