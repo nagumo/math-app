@@ -40,3 +40,6 @@ amplifytools.xcconfig
 
 # github
 actions-runner
+
+# eslint
+.eslintcache
