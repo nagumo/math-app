@@ -5,11 +5,11 @@ name: Main
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches:
-      - master
-      - release/**
-      - test
+  # push:
+  #   branches:
+  #     - master
+  #     - release/**
+  #     - test
 
   pull_request:
     types:
@@ -30,6 +30,7 @@ jobs:
       - name:
         id: head_commit
         run: |
+          git log -1
           COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
           echo ${COMMIT_MESSAGE}
           echo "::set-output name=cm::${COMMIT_MESSAGE}"
