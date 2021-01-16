@@ -31,21 +31,23 @@ jobs:
         node-version: [12.x]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
+    env:
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      # - name: Dump GitHub context
+      #   env:
+      #     GITHUB_CONTEXT: ${{ toJson(github) }}
+      #   run: echo "$GITHUB_CONTEXT"
 
       - name: echo branch
         if: github.event_name == 'push'
         run: |
           echo On push
           echo ${GITHUB_REF##*/}
-          echo "$GITHUB_CONTEXT"
 
       - name: Dump GitHub context
         if: github.event_name == 'pull_request'
