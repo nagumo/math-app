@@ -1,12 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Main
+name: Test
 
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-  #   branches:
+  # push:
+  #   branches-ignore:
   #     - master
   #     - release/**
   #     - test
@@ -21,76 +21,76 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  head_commit:
-    runs-on: macos-10.15
-    outputs:
-      head_commit_message: ${{ steps.head_commit.outputs.cm }}
-    steps:
-      - uses: actions/checkout@v2
-      - name:
-        id: head_commit
-        run: |
-          git log -1
-          COMMIT_MESSAGE=$(git log --skip 1 -1 --pretty=format:"%s")
-          echo ${COMMIT_MESSAGE}
-          echo "::set-output name=cm::${COMMIT_MESSAGE}"
-
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
     runs-on: macos-10.15
-    needs: head_commit
 
     strategy:
       matrix:
         node-version: [12.x]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
-    env:
-      GITHUB_CONTEXT: ${{ toJson(github) }}
-      COMMIT_MESSAGE: ${{ needs.head_commit.outputs.head_commit_message }}
-
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # - name: Dump GitHub context
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache npm
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-npm
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            npm-${{ runner.os }}-build-${{ env.cache-name }}-
+            npm-${{ runner.os }}-build-
+            npm-${{ runner.os }}-
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: node_modules-${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            node_modules-${{ runner.os }}-build-${{ env.cache-name }}-
+            node_modules-${{ runner.os }}-build-
+            node_modules-${{ runner.os }}-
+
+      - name: Install Dependencies
+        run: npm i
+
+      - name: Build
+        run: npm build
+
+      - name: Test
+        run: npm test -- --coverage
+
+      # - name: Dump GitHub context sample
       #   env:
       #     GITHUB_CONTEXT: ${{ toJson(github) }}
       #   run: echo "$GITHUB_CONTEXT"
 
-      - name: echo branch PUSH
+      - name: echo branch
         if: github.event_name == 'push'
         run: |
           echo On push
           echo ${GITHUB_REF##*/}
-          echo "$GITHUB_CONTEXT"
-          echo "$COMMIT_MESSAGE"
 
-      - name: echo branch PR
+      - name: Dump GitHub context
         if: github.event_name == 'pull_request'
         run: |
           echo On Pull Request
           echo ${{ github.head_ref }}
-          echo "$GITHUB_CONTEXT"
-          echo "$COMMIT_MESSAGE"
 
       # - name: Set up Node.js ${{ matrix.node-version }}
       #   uses: actions/setup-node@v1
       #   with:
       #     node-version: ${{ matrix.node-version }}
-      #
-      # - name: Install dependencies
-      #   run: npm i
-      #
-      # - name: Run the Test
-      #   run: npm test -- --coverage
-      #
-      # - name: Build
-      #   run: npm build
-
-      # # Runs a set of commands using the runners shell
-      # - name: Run a multi-line script
-      #   run: |
-      #     echo Add other actions to build,
-      #     echo test, and deploy your project.
