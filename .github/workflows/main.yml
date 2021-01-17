@@ -31,7 +31,7 @@ jobs:
         id: head_commit
         run: |
           git log -1
-          COMMIT_MESSAGE=$(git log -1 --pretty=format:"%s")
+          COMMIT_MESSAGE=$(git log HEAD^ -1 --pretty=format:"%s")
           echo ${COMMIT_MESSAGE}
           echo "::set-output name=cm::${COMMIT_MESSAGE}"
 
